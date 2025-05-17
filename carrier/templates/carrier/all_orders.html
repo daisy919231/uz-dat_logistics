@@ -1,0 +1,69 @@
+{% extends "carrier/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>All Orders</h2>
+        <a href="{% url 'carrier:export-orders' %}" class="btn btn-success">
+            <i class="fas fa-file-excel me-1"></i> Export to Excel
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Bid</th>
+                        <th>Bid Price</th>
+                        <th>Avto</th>
+                        <th>Truck</th>
+                        <th>Freight</th>
+                        <th>Distance</th>
+                        <th>Offered Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>
+                            <span class="badge bg-{% if order.status == 'Complete' %}success{% else %}warning{% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if order.bid %}
+                                <span class="text-success">Yes</span>
+                            {% else %}
+                                <span class="text-muted">No</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if order.bid_price %}
+                                ${{ order.bid_price }}
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ order.avto|default:"-" }}</td>
+                        <td>{{ order.truck }}</td>
+                        <td>{{ order.freight.origin }} → {{ order.freight.destination }}</td>
+                        <td>{{ order.freight.distance }} km</td>
+                        <td>${{ order.freight.offered_price }}</td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-center text-muted">No orders found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

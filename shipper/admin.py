@@ -4,4 +4,3 @@ from shipper.models import *
 
 admin.site.register(Shipper)
 admin.site.register(Freight)
-admin.site.register(Location)

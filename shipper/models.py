@@ -18,18 +18,18 @@ class Shipper(BaseModel):
     def __str__(self):
         return self.full_name or 'Noname'
 
-class Location(BaseModel):
-    location1=models.CharField(max_length=250, null=True)
-    location2=models.CharField(max_length=250, null=True)
-    distance=models.PositiveIntegerField(default=0)
+# class Location(BaseModel):
+#     location1=models.CharField(max_length=250, null=True)
+#     location2=models.CharField(max_length=250, null=True)
+#     distance=models.PositiveIntegerField(default=0)
 
-    def display_location(self):
-        if hasattr(self, 'location1') and hasattr(self, 'location2'):
-            return f"{self.location1} - {self.location2}"
-        return str(self)  # fallback to __str__ method
+#     def display_location(self):
+#         if hasattr(self, 'location1') and hasattr(self, 'location2'):
+#             return f"{self.location1} - {self.location2}"
+#         return str(self)  # fallback to __str__ method
     
-    def __str__(self):
-        return self.display_location()
+#     def __str__(self):
+#         return self.display_location()
 
 class Freight(BaseModel):
     class StatusChoices(models.TextChoices):
@@ -40,8 +40,17 @@ class Freight(BaseModel):
     trailer=models.PositiveIntegerField(default=0)
     mass=models.PositiveIntegerField(default=0)
     status=models.CharField(choices=StatusChoices.choices, default=StatusChoices.searching)
-    location=models.ForeignKey(Location, on_delete=models.CASCADE, related_name='freights')
+    origin=models.CharField(max_length=100, null=True)
+    destination=models.CharField(max_length=100, null=True)
+    distance=models.PositiveIntegerField(default=0)
     offered_price=models.FloatField() #per km
+    comment=models.TextField(blank=True, null=True)
+
+    @property
+    def display_location(self):
+        if hasattr(self, 'origin') and hasattr(self, 'destination'):
+            return f"{self.origin} - {self.destination}"
+        return str(self)
 
     def __str__(self):
         return self.name or ''

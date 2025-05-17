@@ -1,7 +1,8 @@
 from django.db import models
-from shipper.models import Freight, Location
+from shipper.models import Freight
 from config import settings
-
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your models here.
 class BaseModel(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)

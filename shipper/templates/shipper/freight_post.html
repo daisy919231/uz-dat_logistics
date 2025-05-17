@@ -72,11 +72,7 @@
                     <tbody>
                         {% for freight in freights %}
                         <tr>
-                            <td>
-                                <a href="{% url 'shipper:freight-detail' freight.id %}" class="text-decoration-none">
-                                    {{ freight.name }}
-                                </a>
-                            </td>
+                            <td>{{ freight.name }}</td>
                             <td>{{ freight.trailer }}</td>
                             <td>{{ freight.mass }}</td>
                             <td>
@@ -86,16 +82,17 @@
                             </td>
                             <td>${{ freight.offered_price }}</td>
                             <td>
-                                {% if freight.location %}
-                                    {{ freight.location.display_location }}
-                                {% else %}
-                                    <span class="text-muted">Not specified</span>
-                                {% endif %}
-                            </td>                          <td>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        {{ freight.display_location }}
+                                        {% if freight.distance %}
+                                            <div class="text-muted small">{{ freight.distance }} km</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{% url 'shipper:freight-detail' freight.id %}" class="btn btn-outline-primary">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
                                     <a href="{% url 'shipper:freight-edit' freight.id %}" class="btn btn-outline-secondary">
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -107,10 +104,10 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="6" class="text-center">No freights found</td>
+                            <td colspan="7" class="text-center">No freights found</td>  <!-- Reduced colspan to 7 -->
                         </tr>
                         {% endfor %}
-                    </tbody>
+                    </tbody>                    
                 </table>
             </div>
         </div>

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
-from shipper.models import Freight, Location, Shipper
-from shipper.serializers import FreightSerializer, LocationSerializer
+from shipper.models import Freight, Shipper
+from shipper.serializers import FreightSerializer
 from shipper.permissions import IsShipper
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -89,11 +89,11 @@ class FreightAPIView(ListCreateAPIView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class FreightDetailAPIView(RetrieveAPIView):
-    authentication_classes=[IsAuthenticated]
-    queryset = Freight.objects.all()
-    serializer_class = FreightSerializer
-    lookup_field = 'id' 
+# class FreightDetailAPIView(RetrieveAPIView):
+#     permission_classes = [IsAuthenticated, IsShipper]
+#     queryset = Freight.objects.all()
+#     serializer_class = FreightSerializer
+#     lookup_field = 'id' 
 
 class FreightUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = FreightSerializer
@@ -137,14 +137,14 @@ class FreightTemplateView(TemplateView):
 #     def get_queryset(self):
 #         queryset = Freight.objects.filter(status='searching')  # Only show available freights
         
-#         # Get search parameters from URL (e.g., ?location1=City&location2=City)
-#         location1 = self.request.GET.get('location1')
-#         location2 = self.request.GET.get('location2')
+#         # Get search parameters from URL (e.g., ?origin=City&destination=City)
+#         origin = self.request.GET.get('origin')
+#         destination = self.request.GET.get('destination')
         
-#         if location1:
-#             queryset = queryset.filter(location1__icontains=location1)
-#         if location2:
-#             queryset = queryset.filter(location2__icontains=location2)
+#         if origin:
+#             queryset = queryset.filter(origin__icontains=origin)
+#         if destination:
+#             queryset = queryset.filter(destination__icontains=destination)
         
 #         return queryset
 
@@ -161,14 +161,14 @@ class FreightSearchView(ListView):
 
         
         # Get search parameters from URL
-        location1 = self.request.GET.get('location1')
-        location2 = self.request.GET.get('location2')
+        origin = self.request.GET.get('origin')
+        destination = self.request.GET.get('destination')
         
         # Only apply filters if search parameters are provided
-        if location1 or location2:
-            if location1:
-                queryset = queryset.filter(location__location1__icontains=location1)
-            if location2:
-                queryset = queryset.filter(location__location2__icontains=location2)
+        if origin or destination:
+            if origin:
+                queryset = queryset.filter(origin__icontains=origin)
+            if destination:
+                queryset = queryset.filter(destination__icontains=destination)
         
         return queryset
