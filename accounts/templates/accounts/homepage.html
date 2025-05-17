@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAT-UZ | Powering Logistics Across Uzbekistan and Beyond</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c5cc5;
+            --secondary: #1e429f;
+            --accent: #4cc9f0;
+            --dark: #1a365d;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, rgba(44,92,197,0.9) 0%, rgba(30,66,159,0.9) 100%), 
+                        url('https://images.unsplash.com/photo-1606765962140-cf47a527ab4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .how-it-works {
+            background-color: #f8fafc;
+        }
+        
+        .country-flag {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-card {
+            border-left: 4px solid var(--primary);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 text-primary" href="#">
+                <i class="fas fa-truck-moving me-2"></i>DAT-UZ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#cross-border">Cross-Border</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary">Login</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a href="{% url 'accounts:register' %}" class="btn btn-primary">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero text-center">
+        <div class="container py-5">
+            <h1 class="display-4 fw-bold mb-3">POWERING LOGISTICS ACROSS UZBEKISTAN AND BEYOND</h1>
+            <p class="lead mb-4">Connecting Shippers & Carriers Across Central Asia</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'accounts:register' %}?role=shipper" class="btn btn-light btn-lg px-4">I'm a Shipper</a>
+                <a href="{% url 'accounts:register' %}?role=carrier" class="btn btn-outline-light btn-lg px-4">I'm a Carrier</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-5 how-it-works">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">HOW DAT-UZ WORKS</h2>
+                <p class="lead">Streamline freight matching for local and cross-border logistics</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="p-4 bg-white rounded shadow-sm h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <h3>For Shippers</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Post loads with detailed requirements</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Search available trucks by location and type</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Get instant quotes from verified carriers</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i> Track shipments in real-time</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="p-4 bg-white rounded shadow-sm h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>For Carriers</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Post available trucks and routes</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Search freights matching your capacity</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Smart matching by location and cargo type</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i> Get paid faster with secure transactions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5 p-4 bg-white rounded shadow-sm">
+                <h4 class="text-center mb-4">Smart Matching Features</h4>
+                <div class="row text-center">
+                    <div class="col-md-4 mb-3">
+                        <i class="fas fa-map-marker-alt text-primary fs-3 mb-2"></i>
+                        <h5>Location Matching</h5>
+                        <p>Find loads or trucks based on precise locations</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <i class="fas fa-border-all text-primary fs-3 mb-2"></i>
+                        <h5>Vehicle Type</h5>
+                        <p>Filter by truck size, capacity, and special features</p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <i class="fas fa-box-open text-primary fs-3 mb-2"></i>
+                        <h5>Cargo Specific</h5>
+                        <p>Match based on cargo type, weight, and requirements</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cross-Border Section -->
+    <section id="cross-border" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-4">CROSS-BORDER LOGISTICS MADE SIMPLE</h2>
+                    <p class="lead">Seamless freight matching across Central Asia</p>
+                    <p>DAT-UZ connects shippers and carriers across Uzbekistan, Kazakhstan, Kyrgyzstan, Turkmenistan, and Afghanistan with our specialized cross-border logistics platform.</p>
+                    
+                    <div class="d-flex flex-wrap my-4">
+                        <img src="https://flagcdn.com/w40/uz.png" class="country-flag" title="Uzbekistan">
+                        <img src="https://flagcdn.com/w40/kz.png" class="country-flag" title="Kazakhstan">
+                        <img src="https://flagcdn.com/w40/kg.png" class="country-flag" title="Kyrgyzstan">
+                        <img src="https://flagcdn.com/w40/tm.png" class="country-flag" title="Turkmenistan">
+                        <img src="https://flagcdn.com/w40/af.png" class="country-flag" title="Afghanistan">
+                    </div>
+                    
+                    <h5 class="mt-4">Key Benefits:</h5>
+                    <ul>
+                        <li>Expanded market reach for carriers</li>
+                        <li>Faster border coordination with digital documentation</li>
+                        <li>Real-time alerts for border delays or requirements</li>
+                        <li>Localized support in each country</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="p-4 border rounded bg-light">
+                        <h4 class="text-center mb-4"><i class="fas fa-route me-2"></i>Example Route</h4>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="text-center">
+                                <img src="https://flagcdn.com/w40/uz.png" class="country-flag mb-2">
+                                <div>Tashkent, Uzbekistan</div>
+                            </div>
+                            <i class="fas fa-arrow-right text-muted mx-3"></i>
+                            <div class="text-center">
+                                <img src="https://flagcdn.com/w40/kz.png" class="country-flag mb-2">
+                                <div>Almaty, Kazakhstan</div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <p>"A Kyrgyz carrier can book a Tashkent–Almaty load seamlessly through DAT-UZ, with all border documentation handled digitally."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5">WHAT OUR USERS SAY</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h5 class="mb-0">Akmal T.</h5>
+                                <small class="text-muted">Shipper, Tashkent</small>
+                            </div>
+                        </div>
+                        <p>"DAT-UZ reduced our empty truck searches from days to hours. The cross-border features saved us 30% on Kazakhstan routes."</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h5 class="mb-0">Dilfuza R.</h5>
+                                <small class="text-muted">Carrier, Samarkand</small>
+                            </div>
+                        </div>
+                        <p>"My trucks now have 40% more loads thanks to DAT-UZ. The Afghanistan border alerts help me plan better."</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h5 class="mb-0">Bakyt K.</h5>
+                                <small class="text-muted">Carrier, Bishkek</small>
+                            </div>
+                        </div>
+                        <p>"The Uzbekistan-Kyrgyzstan routes on DAT-UZ keep my fleet busy year-round. Digital docs make border crossing easier."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-4">READY TO STREAMLINE YOUR LOGISTICS?</h2>
+            <p class="lead mb-5">Join hundreds of shippers and carriers already using DAT-UZ</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'accounts:register' %}?role=shipper" class="btn btn-light btn-lg px-4">Register as Shipper</a>
+                <a href="{% url 'accounts:register' %}?role=carrier" class="btn btn-outline-light btn-lg px-4">Register as Carrier</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3"><i class="fas fa-truck-moving me-2"></i>DAT-UZ</h5>
+                    <p>Powering logistics across Uzbekistan and Central Asia through digital freight matching.</p>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#how-it-works" class="text-white text-decoration-none">How It Works</a></li>
+                        <li class="mb-2"><a href="#cross-border" class="text-white text-decoration-none">Cross-Border</a></li>
+                        <li><a href="{% url 'accounts:logout' %}" class="text-white text-decoration-none">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5 class="mb-3">Countries</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-light text-dark">Uzbekistan</span>
+                        <span class="badge bg-light text-dark">Kazakhstan</span>
+                        <span class="badge bg-light text-dark">Kyrgyzstan</span>
+                        <span class="badge bg-light text-dark">Turkmenistan</span>
+                        <span class="badge bg-light text-dark">Afghanistan</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@dat-uz.com</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +998 71 123 4567</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Tashkent, Uzbekistan</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2025 DAT-UZ. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

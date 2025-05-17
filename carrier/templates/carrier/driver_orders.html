@@ -1,0 +1,25 @@
+<!-- Example template content -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>My Orders</h2>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'carrier:driver-orders' %}">My Orders</a>
+        </li>
+    </ul>
+    
+    <!-- Orders listing would go here -->
+    <div class="orders-list">
+        {% for order in orders %}
+            <div class="order-card">
+                <h3>Order #{{ order.id }}</h3>
+                <p>Status: {{ order.get_status_display }}</p>
+            </div>
+        {% empty %}
+            <p>No orders found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

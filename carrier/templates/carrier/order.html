@@ -1,0 +1,32 @@
+{% extends "carrier/base.html" %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">Order Confirmation</h2>
+
+    <div class="card shadow-sm p-4">
+        <h4 class="mb-3">Freight Details</h4>
+        <p><strong>Route:</strong> {{ order.freight.location.location1 }} → {{ order.freight.location.location2 }}</p>
+        <p><strong>Name:</strong> {{ order.freight.name }}</p>
+        <p><strong>Trailer Size:</strong> {{ order.freight.trailer }} m</p>
+        <p><strong>Weight:</strong> {{ order.freight.mass }} kg</p>
+        <p><strong>Price per km:</strong> ${{ order.freight.offered_price }}</p>
+        {% if order.bid %}
+            <p><strong>Bid Price:</strong> ${{ order.bid_price }}</p>
+        {% endif %}
+
+        <hr>
+
+        <h4 class="mb-3">Truck Details</h4>
+        <p><strong>Truck Number:</strong> {{ order.truck.truck_number }}</p>
+        <p><strong>Truck Type:</strong> {{ order.truck.type }}</p>
+
+        <hr>
+
+        <h4 class="mb-3">Order Status</h4>
+        <p><span class="badge bg-warning text-dark">{{ order.status }}</span></p>
+
+        <a href="{% url 'carrier:driver-orders' %}" class="btn btn-primary mt-3">Back to My Orders</a>
+    </div>
+</div>
+{% endblock %}
