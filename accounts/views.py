@@ -30,12 +30,20 @@ class MyLoginView(LoginView):
     template_name = 'accounts/login.html'
     form_class = LoginForm
 
-    def get_success_url(self):
-        return reverse_lazy('accounts:homepage')
-
     def form_invalid(self, form):
         messages.error(self.request, 'Invalid username or password')
         return super().form_invalid(form)
+    
+    def get_success_url(self):
+        user = self.request.user
+        
+        # Check if user is a driver
+        if hasattr(user, 'driver'):
+            return reverse_lazy('shipper:freight-search')  # URL name for driver's freight search
+        
+        # Check if user is a carrier/shipper
+        elif hasattr(user, 'shipper'):
+            return reverse_lazy('shipper:freight-list')
 
 @login_required
 def user_logout(request):

@@ -75,7 +75,7 @@ class FreightAPIView(ListCreateAPIView):
                 freight = form.save(commit=False)
                 freight.shipper = request.user.shipper
                 freight.save()
-                return redirect('freight-list')
+                return redirect('shipper:freight-list')
             return Response({
                 'form': form,
                 'freights': self.get_queryset().values()
