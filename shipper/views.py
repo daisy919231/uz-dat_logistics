@@ -47,46 +47,50 @@ from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, Retrieve
 #         except Shipper.DoesNotExist:
 #             raise PermissionDenied("User is not a registered shipper")
 
-class FreightAPIView(ListCreateAPIView):
-    serializer_class = FreightSerializer
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [IsAuthenticated, IsShipper]
-    renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
-    template_name = 'shipper/freight_post.html'  # Combined template
+def freight_list_create(request):
+    # Get the shipper profile
+    try:
+        shipper_profile = Shipper.objects.get(user=request.user)
+    except Shipper.DoesNotExist:
+        if request.headers.get('Accept') == 'application/json':
+            return Response({"error": "Shipper profile not found"}, status=403)
+        return redirect('accounts:login')  # Or appropriate error page
 
-    def get_queryset(self):
-        """Only show freights owned by the current shipper"""
-        shipper_profile = Shipper.objects.get(user=self.request.user)
-        return Freight.objects.filter(shipper=shipper_profile)
-
-    def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
-        if request.accepted_renderer.format == 'html':
-            return Response({
-                'freights': response.data,
-                'form': FreightCreateForm()  # Include empty form for GET requests
-            }, template_name=self.template_name)
-        return response
-
-    def create(self, request, *args, **kwargs):
-        if request.accepted_renderer.format == 'html':
+    # Handle HTML requests
+    if request.content_type != 'application/json':
+        if request.method == 'GET':
+            form = FreightCreateForm()
+            freights = Freight.objects.filter(shipper=shipper_profile)
+            return render(request, 'shipper/freight_post.html', {
+                'freights': freights,
+                'form': form
+            })
+        
+        elif request.method == 'POST':
             form = FreightCreateForm(request.POST)
             if form.is_valid():
                 freight = form.save(commit=False)
-                freight.shipper = request.user.shipper
+                freight.shipper = shipper_profile
                 freight.save()
                 return redirect('shipper:freight-list')
-            return Response({
+            freights = Freight.objects.filter(shipper=shipper_profile)
+            return render(request, 'shipper/freight_post.html', {
                 'form': form,
-                'freights': self.get_queryset().values()
-            }, template_name=self.template_name)
-        return super().create(request, *args, **kwargs)
+                'freights': freights
+            }, status=400)
+
+    # Handle API requests (JSON)
+    if request.method == 'GET':
+        freights = Freight.objects.filter(shipper=shipper_profile)
+        serializer = FreightSerializer(freights, many=True)
+        return Response(serializer.data)
     
-    def dispatch(self, request, *args, **kwargs):
-        print(f"User authenticated: {request.user.is_authenticated}")
-        print(f"User role: {getattr(request.user, 'role', None)}")
-        print(f"Session: {request.session.items()}")
-        return super().dispatch(request, *args, **kwargs)
+    elif request.method == 'POST':
+        serializer = FreightSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(shipper=shipper_profile)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
 
 
 # class FreightDetailAPIView(RetrieveAPIView):

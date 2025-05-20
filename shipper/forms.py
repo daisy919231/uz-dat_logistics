@@ -5,7 +5,7 @@ from .models import Freight, Shipper
 class FreightCreateForm(forms.ModelForm):
     class Meta:
         model = Freight
-        fields = ['name', 'trailer', 'mass', 'status', 'offered_price', 'origin', 'destination']
+        fields = ['name', 'trailer', 'mass', 'status', 'offered_price', 'origin', 'destination', 'distance']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -33,6 +33,10 @@ class FreightCreateForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Price per km',
                 'step': '0.01'
+            }),
+            'distance': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'distance'
             }),
         }
         labels = {

@@ -21,33 +21,45 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'full_name', 'password1', 'password2', 'role', 'phone_number', 'company_name', 'license_number']
+        fields = ['username', 'email', 'full_name', 'password1', 'password2', 'role', 'phone_number', 'company_name', 'license_number']
 
     def save(self, commit=True):
         user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
         user.role = self.cleaned_data['role']
+
         if commit:
             user.save()
-            print("Saving user:", user.username)
+            print(f"Saving user: {user.username}")
             
+            # Only create if related model doesn't exist already
             if user.role == 'shipper':
-                if not Shipper.objects.filter(user=user).exists():
-                    shipper = Shipper.objects.create(
+                if not hasattr(user, 'shipper'):
+                    phone = self.cleaned_data.get('phone_number')
+                    print("Creating shipper with phone:", phone)
+
+                    shipper = Shipper(
+                        user=user,
+                        phone_number=phone,
+                        full_name=self.cleaned_data.get('full_name'),
+                        company_name=self.cleaned_data.get('company_name'),
+                    )
+                    shipper.save()
+                else:
+                    print("Shipper already exists for user")
+
+            elif user.role == 'driver':
+                if not hasattr(user, 'driver'):
+                    driver = Driver(
                         user=user,
                         phone_number=self.cleaned_data.get('phone_number'),
                         full_name=self.cleaned_data.get('full_name'),
-                        company_name=self.cleaned_data.get('company_name')
-                    )
-                    print("Created Shipper:", shipper)
-            elif user.role == 'driver':
-                if not Driver.objects.filter(user=user).exists():
-                    driver = Driver.objects.create(
-                        user=user,
-                        phone_number=self.cleaned_data.get('phone_number'),
                         license_number=self.cleaned_data.get('license_number'),
-                        full_name=self.cleaned_data.get('full_name')
                     )
-                    print("Created Driver:", driver)
+                    driver.save()
+                else:
+                    print("Driver already exists for user")
+
         return user
 
 

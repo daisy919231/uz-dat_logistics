@@ -68,9 +68,9 @@
                         <div>
                             <h5 class="card-title mb-0">{{ freight.name|default:"Unnamed Freight" }}</h5>
                             <small class="text-muted">
-                                {{ freight.location.location1|default:"N/A" }}
+                                {{ freight.origin }}
                                 <i class="fas fa-arrow-right mx-2 text-primary"></i>
-                                {{ freight.location.location2|default:"N/A" }}
+                                {{ freight.destination}}
                             </small>
                         </div>
                     </div>

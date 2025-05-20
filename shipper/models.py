@@ -48,9 +48,7 @@ class Freight(BaseModel):
 
     @property
     def display_location(self):
-        if hasattr(self, 'origin') and hasattr(self, 'destination'):
-            return f"{self.origin} - {self.destination}"
-        return str(self)
+        return f"{self.origin} - {self.destination}"
 
     def __str__(self):
         return self.name or ''

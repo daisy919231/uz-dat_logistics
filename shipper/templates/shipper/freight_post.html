@@ -66,6 +66,9 @@
                             <th>Status</th>
                             <th>Price/km</th>
                             <th>Location</th>
+                            <th>Phone number</th>
+                            <th>Email</th>
+                            <th>Distance km</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -81,16 +84,10 @@
                                 </span>
                             </td>
                             <td>${{ freight.offered_price }}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        {{ freight.display_location }}
-                                        {% if freight.distance %}
-                                            <div class="text-muted small">{{ freight.distance }} km</div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </td>
+                            <td>{{freight.origin}} - {{freight.destination}}</td>
+                            <td>{{freight.shipper.phone_number}}</td>
+                            <td>{{freight.shipper.user.email}}</td>
+                            <td>{{freight.distance}}</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <a href="{% url 'shipper:freight-edit' freight.id %}" class="btn btn-outline-secondary">
