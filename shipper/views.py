@@ -176,3 +176,11 @@ class FreightSearchView(ListView):
                 queryset = queryset.filter(destination__icontains=destination)
         
         return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for freight in context['freights']:
+            try:
+                freight.total_price = freight.offered_price * freight.distance
+            except (TypeError, ValueError):
+                freight.total_price = 0
+        return context
